@@ -112,9 +112,10 @@ app.game =
 		requestAnimationFrame        = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame
 		window.requestAnimationFrame = requestAnimationFrame
 
-		(stepper = ->
+		(stepper = _.throttle ->
 			app.game.step() if $("#auto_button").hasClass("on")
 			requestAnimationFrame stepper
+		, 100
 		).call()
 
 
