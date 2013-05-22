@@ -1,5 +1,8 @@
 app.game =
 
+
+	# Setup
+	###################################################################
 	setup: ->
 		@get_dimensions()
 		@create_context()
@@ -28,11 +31,9 @@ app.game =
 			for y in [0..@rows]
 				@grid[x][y] = false
 
-	clear_grid: ->
-		for x in [0..@cols]
-			for y in [0..@rows]
-				@clear_cell x, y
 
+	# Accessor and display methods
+	###################################################################
 	toggle_cell: (x, y) ->
 		@grid[x][y] = !@grid[x][y]
 		@refresh_cell x, y
@@ -50,6 +51,10 @@ app.game =
 		@context.fillStyle = if @grid[x][y] then app.config.color_active else app.config.color_inactive
 		@context.fillRect xy.x, xy.y, 10, 10
 		
+
+
+	# Calculation methods
+	###################################################################
 	xy_to_grid: (x,y) ->
 		x: Math.floor(x/10)
 		y: Math.floor(y/10)
@@ -58,6 +63,10 @@ app.game =
 		x: x*10
 		y: y*10
 
+
+
+	# Main evolution method
+	###################################################################
 	step: ->
 
 		# Build an array to contain neighbour counts for each cell
@@ -97,7 +106,10 @@ app.game =
 					@set_cell x, y
 
 
-	# Hack in a requestAnimationFrame event
+
+
+	# Animation methods
+	###################################################################
 	start_animation_loop: ->
 		requestAnimationFrame        = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame
 		window.requestAnimationFrame = requestAnimationFrame
@@ -109,13 +121,9 @@ app.game =
 		).call()
 
 
-	# Populate the game grid with random cells
-	randomize: ->
-		for x in [0..@cols]
-			for y in [0..@rows]
-				if Math.random() > 0.5
-					@set_cell x, y
 
+	# Event-handling methods
+	###################################################################
 	setup_event_handlers: (rect) ->
 		
 		canvas_position = @canvas.offset()
@@ -136,7 +144,6 @@ app.game =
 
 			@canvas.on "mousemove", (e2) =>
 				move_xy = grid_position_from_event e2
-				debugger
 				if ! (_.contains toggled_cells, move_xy)
 					toggled_cells.push move_xy
 					if active
@@ -144,6 +151,21 @@ app.game =
 					else
 						app.game.clear_cell move_xy.x, move_xy.y
 
-
 		$(window).on "mouseup mouseout", =>
 			@canvas.off "mousemove"
+
+
+	# High-lvel manipulation methods
+	###################################################################
+	randomize: ->
+		for x in [0..@cols]
+			for y in [0..@rows]
+				if Math.random() > 0.5
+					@set_cell x, y
+				else
+					@clear_cell x, y
+
+	clear_grid: ->
+		for x in [0..@cols]
+			for y in [0..@rows]
+				@clear_cell x, y

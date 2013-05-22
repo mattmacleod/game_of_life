@@ -1,10 +1,7 @@
 app.controls = 
 	
 	setup: ->
-		@setup_step()
-		@setup_auto()
 
-	setup_step: ->
 		$("#step_button").on "click", ->
 			button = $(this)
 			button.addClass "on"
@@ -15,7 +12,6 @@ app.controls =
 			, 100
 
 
-	setup_auto: ->
 		$("#auto_button").on "click", ->
 			button = $(this)
 			button.toggleClass "on"
@@ -23,3 +19,11 @@ app.controls =
 				button.text "Auto on"
 			else
 				button.text "Auto off"
+
+
+		$("#clear_button").on "click", ->
+			app.game.clear_grid()
+
+
+		$("#randomize_button").on "click", ->
+			app.game.randomize()
