@@ -1,6 +1,6 @@
-#= require "jquery"
-#= require "raphael"
-#= require "underscore"
+#= require lib/jquery
+#= require lib/raphael
+#= require lib/underscore
 
-#= require "setup"
-#= require "playarea"
+#= require _setup
+#= require _playarea
