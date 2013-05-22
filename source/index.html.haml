@@ -1,0 +1,18 @@
+!!! 5
+%html
+	%head
+		%meta{:charset => "utf-8"}/
+		%meta{:name => :viewport, :content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"}/
+		%title Game of Life
+		= stylesheet_link_tag :all
+
+	%body
+		#header
+			%h1 <span>HTML5</span> Conway's Game of Life
+
+			#buttons
+				%a#step_button Step
+				%a#auto_button Auto Off
+
+		#playarea
+		= javascript_include_tag :all

@@ -1,0 +1,41 @@
++establish-baseline
+
+*
+	+box-sizing(border-box)
+
+body
+	padding: 10px
+
+#header
+	background: #222
+	height: rhythm(2)
+	position: absolute
+	top: 0
+	left: 0
+	right: 0
+	padding: 0 $gutter-width
+
+	h1
+		+float-left
+		+adjust-font-size-to(28px, 2)
+		font-family: "Museo300-webfont"
+		color: white
+		text-transform: uppercase
+		span
+			color: $color-1
+
+	#buttons
+		+float-right
+		+legacy-pie-clearfix
+		padding: rhythm(0.5) 0
+		a
+			@extend %button
+
+#playarea
+	position: absolute
+	top: rhythm(2)
+	bottom: 0
+	right: 0
+	left: 0
+	user-select: none
+	-webkit-user-select: none

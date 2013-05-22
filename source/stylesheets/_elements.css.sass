@@ -1,0 +1,16 @@
+%button
+	+float-left
+	+user-select(none)
+	+border-radius(3px)
+	padding: 0 $gutter-width/2
+	margin-left: $gutter-width/2
+	cursor: pointer
+	+adjust-font-size-to(16px, 1)
+	background: $color-1
+	font-family: "Museo300-webfont"
+	text-decoration: none
+	color: white
+	&.on
+		background-color: $color-2
+	&.transition
+		+transition(background 100ms ease-in-out)
