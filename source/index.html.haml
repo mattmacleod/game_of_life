@@ -5,6 +5,7 @@
 		%meta{:name => :viewport, :content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"}/
 		%title Game of Life
 		= stylesheet_link_tag :all
+		= javascript_include_tag :all
 
 	%body
 		#header
@@ -15,4 +16,3 @@
 				%a#auto_button Auto Off
 
 		#playarea
-		= javascript_include_tag :all
