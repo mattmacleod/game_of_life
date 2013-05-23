@@ -5,6 +5,7 @@
 
 body
 	padding: 10px
+	font-family: "Museo300-webfont"
 
 #header
 	background: #222
@@ -19,7 +20,6 @@ body
 	h1
 		+float-left
 		+adjust-font-size-to(28px, 2)
-		font-family: "Museo300-webfont"
 		color: white
 		text-transform: uppercase
 		span
@@ -41,6 +41,8 @@ body
 	+user-select(none)
 	cursor: normal
 	overflow: scroll
+	canvas
+		+transition(all 50ms ease-in-out)
 
 #zoom_panel
 	position: absolute
@@ -49,7 +51,22 @@ body
 	background: rgba(255,255,255,0.95)
 	+box-shadow(0 0 10px rgba(0,0,0,0.5))
 	padding: $gutter-width/2
+	text-align: center
+	+adjust-font-size-to(12px,1)
 	input
+		display: inline-block
 		+appearance(slider-vertical)
 		width: $gutter-width
 		height: 200px
+
+#info_panel
+	position: absolute
+	+box-shadow(0 0 10px rgba(0,0,0,0.5))
+	bottom: rhythm(1)
+	right: $gutter-width
+	padding: rhythm(0.5) $gutter-width/2
+	background: rgba(255,255,255,0.85)
+	color: black
+	min-width: 150px
+	text-align: center
+

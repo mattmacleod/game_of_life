@@ -1,5 +1,6 @@
 app.game =
 
+	generation_counter: 1
 
 	# Setup
 	###################################################################
@@ -7,11 +8,13 @@ app.game =
 		@get_dimensions()
 		@create_context()
 		@create_grid()
-		@align_grid()
 		@clear_grid()
 		@setup_event_handlers()
 		@randomize()
 		@start_animation_loop()
+
+		_.defer =>
+			@align_grid()
 
 	get_dimensions: ->
 		@width  = $("#grid").width()
@@ -23,6 +26,9 @@ app.game =
 		@canvas = $("#main_canvas")
 		@canvas.attr "width", @cols * 10
 		@canvas.attr "height", @rows * 10
+		@canvas.css
+			width: @cols*10
+			height: @rows*10
 		@context = @canvas[0].getContext '2d'
 
 	create_grid: ->
@@ -74,6 +80,8 @@ app.game =
 	# Main evolution method
 	###################################################################
 	step: ->
+
+		$("#generation_counter").text ++@generation_counter
 
 		# Build an array to contain neighbour counts for each cell
 		neighbour_counts = new Array @cols
