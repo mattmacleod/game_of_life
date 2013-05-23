@@ -37,6 +37,7 @@ app.game =
 		top = @canvas.attr("height")/2 - $("#grid").height()/2
 		$("#grid").scrollLeft(left).scrollTop(top)
 
+
 	# Accessor and display methods
 	###################################################################
 	toggle_cell: (x, y) ->
@@ -158,6 +159,12 @@ app.game =
 
 		$(window).on "mouseup mouseout", =>
 			@canvas.off "mousemove"
+
+
+	set_zoom: (factor) ->
+		@canvas.css
+			width: factor * @canvas.attr("width")
+			height: factor * @canvas.attr("height")
 
 
 	# High-lvel manipulation methods

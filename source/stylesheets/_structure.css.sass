@@ -41,4 +41,15 @@ body
 	+user-select(none)
 	cursor: normal
 	overflow: scroll
-	
+
+#zoom_panel
+	position: absolute
+	top: rhythm(3)
+	left: $gutter-width
+	background: rgba(255,255,255,0.95)
+	+box-shadow(0 0 10px rgba(0,0,0,0.5))
+	padding: $gutter-width/2
+	input
+		+appearance(slider-vertical)
+		width: $gutter-width
+		height: 200px
