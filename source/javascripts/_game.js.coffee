@@ -7,6 +7,7 @@ app.game =
 		@get_dimensions()
 		@create_context()
 		@create_grid()
+		@align_grid()
 		@clear_grid()
 		@setup_event_handlers()
 		@randomize()
@@ -15,13 +16,13 @@ app.game =
 	get_dimensions: ->
 		@width  = $("#grid").width()
 		@height = $("#grid").height()
-		@cols   = Math.floor (@width / 10)-1
-		@rows   = Math.floor (@height / 10)-1
+		@cols   = Math.floor (@width / 5)-1
+		@rows   = Math.floor (@height / 5)-1
 
 	create_context: ->
 		@canvas = $("#main_canvas")
-		@canvas.attr "width", $("#grid").width()
-		@canvas.attr "height", $("#grid").height()
+		@canvas.attr "width", @cols * 10
+		@canvas.attr "height", @rows * 10
 		@context = @canvas[0].getContext '2d'
 
 	create_grid: ->
@@ -31,6 +32,10 @@ app.game =
 			for y in [0..@rows]
 				@grid[x][y] = false
 
+	align_grid: ->
+		left = @canvas.attr("width")/2 - $("#grid").width()/2
+		top = @canvas.attr("height")/2 - $("#grid").height()/2
+		$("#grid").scrollLeft(left).scrollTop(top)
 
 	# Accessor and display methods
 	###################################################################
