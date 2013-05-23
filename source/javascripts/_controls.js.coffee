@@ -15,10 +15,6 @@ app.controls =
 		$("#auto_button").on "click", ->
 			button = $(this)
 			button.toggleClass "on"
-			if button.hasClass "on"
-				button.text "Auto on"
-			else
-				button.text "Auto off"
 
 
 		$("#clear_button").on "click", ->
