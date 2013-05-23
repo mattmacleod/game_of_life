@@ -15,8 +15,9 @@ app.game =
 		@start_animation_loop()
 
 		# Not clear why this has to be deferred. Need to step through the code.
-		_.defer =>
+		_.delay =>
 			@align_grid()
+		, 10
 
 	get_dimensions: ->
 		@width  = $("#grid").width()
@@ -144,14 +145,14 @@ app.game =
 
 		@canvas.on "mousedown", (e) =>
 
-			# Get the initial offset of the grid, and prepare a function
+			# Get the initial offset of the canvas, and prepare a function
 			# which can subsequently be called to convert x,y mouse pointer
 			# events into a position on the grid.
-			grid_offset = $("#grid").offset()
+			canvas_offset = @canvas.offset()
 			grid_position_from_event = (e) =>
 				event_position = 
-					x: e.pageX - grid_offset.left
-					y: e.pageY - grid_offset.top
+					x: e.pageX - canvas_offset.left
+					y: e.pageY - canvas_offset.top
 				@xy_to_grid event_position.x, event_position.y
 
 			# This is the cell we moused down on. Add it to the list of toggled
@@ -180,7 +181,7 @@ app.game =
 
 		# Whenever a mouse drag leaves the window or stops, then we need to
 		# disable our mousemove event.
-		$(window).on "mouseup mouseout", =>
+		$(window).on "mouseup", =>
 			@canvas.off "mousemove"
 
 
