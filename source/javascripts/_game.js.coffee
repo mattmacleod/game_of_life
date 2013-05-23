@@ -140,11 +140,12 @@ app.game =
 	###################################################################
 	setup_event_handlers: (rect) ->
 		
-		canvas_position = @canvas.offset()
 		canvas_position_from_event = (e) =>
-			x: e.pageX - canvas_position.left
-			y: e.pageY - canvas_position.top
-
+			canvas_position = @canvas.offset()
+			return {
+				x: e.pageX - canvas_position.left
+				y: e.pageY - canvas_position.top
+			}
 		grid_position_from_event = (e) =>
 			event_position = canvas_position_from_event e
 			@xy_to_grid event_position.x, event_position.y
