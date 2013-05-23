@@ -1,6 +1,7 @@
 app.game =
 
 	generation_counter: 1
+	zoom_factor: 1
 
 	# Setup
 	###################################################################
@@ -13,6 +14,7 @@ app.game =
 		@randomize()
 		@start_animation_loop()
 
+		# Not clear why this has to be deferred. Need to step through the code.
 		_.defer =>
 			@align_grid()
 
@@ -27,7 +29,7 @@ app.game =
 		@canvas.attr "width", @cols * 10
 		@canvas.attr "height", @rows * 10
 		@canvas.css
-			width: @cols*10
+			width:  @cols*10
 			height: @rows*10
 		@context = @canvas[0].getContext '2d'
 
@@ -68,8 +70,8 @@ app.game =
 	# Calculation methods
 	###################################################################
 	xy_to_grid: (x,y) ->
-		x: Math.floor(x/10)
-		y: Math.floor(y/10)
+		x: Math.floor(x / @zoom_factor / 10)
+		y: Math.floor(y / @zoom_factor / 10)
 
 	grid_to_xy: (x,y) ->
 		x: x*10
@@ -139,44 +141,57 @@ app.game =
 	# Event-handling methods
 	###################################################################
 	setup_event_handlers: (rect) ->
-		
-		canvas_position_from_event = (e) =>
-			canvas_position = @canvas.offset()
-			return {
-				x: e.pageX - canvas_position.left
-				y: e.pageY - canvas_position.top
-			}
-		grid_position_from_event = (e) =>
-			event_position = canvas_position_from_event e
-			@xy_to_grid event_position.x, event_position.y
 
 		@canvas.on "mousedown", (e) =>
+
+			# Get the initial offset of the grid, and prepare a function
+			# which can subsequently be called to convert x,y mouse pointer
+			# events into a position on the grid.
+			grid_offset = $("#grid").offset()
+			grid_position_from_event = (e) =>
+				event_position = 
+					x: e.pageX - grid_offset.left
+					y: e.pageY - grid_offset.top
+				@xy_to_grid event_position.x, event_position.y
+
+			# This is the cell we moused down on. Add it to the list of toggled
+			# cells, then toggle it.
 			grid_xy       = grid_position_from_event e
 			toggled_cells = [grid_xy]
-
 			@toggle_cell grid_xy.x, grid_xy.y
+
+			# If we initially moused down on an inactive cell, then we're turning
+			# cells inactive. Otherwise, we're turning them active.
 			active = @grid[grid_xy.x][grid_xy.y]
 
+			# When the mouse is moved, toggle cells if they're not already the
+			# correct status. Add all toggled cells to a list, and make sure
+			# we only toggle them once.
 			@canvas.on "mousemove", (e2) =>
 				move_xy = grid_position_from_event e2
+
 				if ! (_.contains toggled_cells, move_xy)
 					toggled_cells.push move_xy
+
 					if active
 						app.game.set_cell move_xy.x, move_xy.y
 					else
 						app.game.clear_cell move_xy.x, move_xy.y
 
+		# Whenever a mouse drag leaves the window or stops, then we need to
+		# disable our mousemove event.
 		$(window).on "mouseup mouseout", =>
 			@canvas.off "mousemove"
 
 
 	set_zoom: (factor) ->
+		@zoom_factor = factor
 		@canvas.css
 			width: factor * @canvas.attr("width")
 			height: factor * @canvas.attr("height")
 
 
-	# High-lvel manipulation methods
+	# High-level manipulation methods
 	###################################################################
 	randomize: ->
 		for x in [0..@cols]
