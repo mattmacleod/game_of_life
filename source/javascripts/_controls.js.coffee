@@ -26,5 +26,12 @@ app.controls =
 		$("#randomize_button").on "click", ->
 			app.game.randomize()
 
-		$("#zoom_slider").on "change", ->
+		# Set zoom slider values
+		zoom_attrs = 
+			min: 0.3
+			max: 2
+			step: 0.1
+			value: 1
+
+		$("#zoom_slider").attr(zoom_attrs).on "change", ->
 			app.game.set_zoom $(this).val()
