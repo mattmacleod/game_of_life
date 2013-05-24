@@ -187,9 +187,11 @@ app.game =
 
 	set_zoom: (factor) ->
 		@zoom_factor = factor
+		new_width  = factor * @canvas.attr("width")
+		new_height = factor * @canvas.attr("height")
 		@canvas.css
-			width: factor * @canvas.attr("width")
-			height: factor * @canvas.attr("height")
+			width: new_width
+			height: new_height
 
 
 	# High-level manipulation methods
