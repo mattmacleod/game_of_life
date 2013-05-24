@@ -20,18 +20,19 @@ app.game =
 		, 25
 
 	get_dimensions: ->
-		@width  = $("#grid").width()
-		@height = $("#grid").height()
-		@cols   = app.config.grid_size
-		@rows   = app.config.grid_size
+		@width     = $("#grid").width()
+		@height    = $("#grid").height()
+		@cols      = app.config.grid_width
+		@rows      = app.config.grid_height
+		@cell_size = app.config.cell_size
 
 	create_context: ->
 		@canvas = $("#main_canvas")
-		@canvas.attr "width", @cols * 10
-		@canvas.attr "height", @rows * 10
-		@canvas.css
-			width:  @cols*10
-			height: @rows*10
+		size =
+			width: @cols * app.config.cell_size
+			height: @rows * app.config.cell_size
+
+		@canvas.attr(size).css(size)
 		@context = @canvas[0].getContext '2d'
 
 	create_grid: ->
@@ -63,15 +64,15 @@ app.game =
 
 	refresh_cell: (x, y) ->
 		@context.fillStyle = if @grid[x][y] then app.config.color_active else app.config.color_inactive
-		@context.fillRect x*10, y*10, 10, 10
+		@context.fillRect x*@cell_size, y*@cell_size, @cell_size, @cell_size
 		
 
 
 	# Calculation methods
 	###################################################################
 	xy_to_grid: (x,y) ->
-		x: Math.floor(x / @zoom_factor / 10)
-		y: Math.floor(y / @zoom_factor / 10)
+		x: Math.floor(x / @zoom_factor / @cell_size)
+		y: Math.floor(y / @zoom_factor / @cell_size)
 
 
 	# Main evolution method
