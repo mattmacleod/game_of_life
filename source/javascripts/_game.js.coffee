@@ -17,13 +17,13 @@ app.game =
 		# Not clear why this has to be deferred. Need to step through the code.
 		_.delay =>
 			@align_grid()
-		, 10
+		, 25
 
 	get_dimensions: ->
 		@width  = $("#grid").width()
 		@height = $("#grid").height()
-		@cols   = Math.floor( @width/3)-1
-		@rows   = Math.floor( @height/3)-1
+		@cols   = app.config.grid_size
+		@rows   = app.config.grid_size
 
 	create_context: ->
 		@canvas = $("#main_canvas")
