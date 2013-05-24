@@ -22,8 +22,8 @@ app.game =
 	get_dimensions: ->
 		@width  = $("#grid").width()
 		@height = $("#grid").height()
-		@cols   = Math.floor (@width / 5)-1
-		@rows   = Math.floor (@height / 5)-1
+		@cols   = Math.floor( @width/3)-1
+		@rows   = Math.floor( @height/3)-1
 
 	create_context: ->
 		@canvas = $("#main_canvas")
@@ -62,9 +62,8 @@ app.game =
 		@refresh_cell x, y
 
 	refresh_cell: (x, y) ->
-		xy = @grid_to_xy x, y
 		@context.fillStyle = if @grid[x][y] then app.config.color_active else app.config.color_inactive
-		@context.fillRect xy.x, xy.y, 10, 10
+		@context.fillRect x*10, y*10, 10, 10
 		
 
 
@@ -73,11 +72,6 @@ app.game =
 	xy_to_grid: (x,y) ->
 		x: Math.floor(x / @zoom_factor / 10)
 		y: Math.floor(y / @zoom_factor / 10)
-
-	grid_to_xy: (x,y) ->
-		x: x*10
-		y: y*10
-
 
 
 	# Main evolution method
@@ -121,7 +115,6 @@ app.game =
 						@clear_cell x, y
 				else if neighbour_count == 3
 					@set_cell x, y
-
 
 
 
