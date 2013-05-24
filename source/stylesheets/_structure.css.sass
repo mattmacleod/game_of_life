@@ -6,6 +6,8 @@
 body
 	padding: 10px
 	font-family: "Museo300-webfont"
+	+user-select(none)
+	cursor: default
 
 #header
 	background: #222
@@ -38,8 +40,6 @@ body
 	bottom: 0
 	right: 0
 	left: 0
-	+user-select(none)
-	cursor: default
 	overflow: scroll
 	canvas
 		+transition(all 50ms ease-in-out)
